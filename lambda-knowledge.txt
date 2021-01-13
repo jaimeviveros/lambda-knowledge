@@ -1,0 +1,92 @@
+-- configurando credenciales para trabajar con serverless framework
+serverless config credentials --provider aws --key AKIA53OJNRF2O3JUS4TL --secret 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
+
+# Prueba a aws
+sls invoke -f hello -s dev
+
+# Prueba a localhost
+sls invoke local -f hello -s dev -d 'Hola ctmre'
+
+# Prueba a aws
+sls invoke -f hello -s dev -d 'Hola ctmre'
+
+# Deploy del proyecto
+sls deploy
+
+# Deploy de la funcion
+sls deploy -f hello -s dev
+
+# server offline install
+-- primero <npm init -y> para iniciar proyecto npm
+npm install --save serverless-offline
+
+#agregar al yml:
+plugins:
+    - serverless-offline
+
+# ejectuar offline (genera api gateway local).
+sls offline
+
+# agregar parametro path:
+path: ruta/{nombre_param}
+
+# obtener los pathparameter en js del lambda
+event.pathParameter.nombre_param
+
+# obtener querystring
+npm install --save querystring
+
+-- en js
+queryString.parse(event['body']);
+
+-- borrar el proyecto en aws (no borra nada local)
+sls remove
+
+# validar fortaleza password
+npm install zxcvbn --save
+
+# crear proyecto lambda
+sls create -t aws-nodejs -n curso-algo 
+
+# despues de crear, iniciar npm project
+npm init -y
+
+# devolver error en fx js:
+return Promise.reject({json})
+
+# devolver algo correcto
+return Promise.resolve({json});
+
+# en metodo asyn usar try catch para controlar errores en fx anidadas promises
+
+# para ahorrar datos en carga de los lambda
+npm install serverless-plugin-include-dependencies --save-dev 
+# se añade a los plugins en yml
+plugins:
+    - serverless-plugin-include-dependencies
+
+package:
+    excludee:
+        - node_modules/**
+
+# serverless-http para trabajar con express
+npm install --save express serverless-http
+
+# añadiendo custom para agregar parametros personalizados en el yml:
+
+# instalar bodyParser y aws-sdk
+npm install --save aws-sdk body-parser
+
+# instalar dynamoDB local
+npm install --save-dev serverless-offline serverless-dynamo-local
+
+# intalar dynamodb offline
+sls dynamodb install
+
+# iniciar modo offline
+sls offline start
+
+# en yml, custom debe tener:
+ dynamodb:
+    start:
+      migrate: true
