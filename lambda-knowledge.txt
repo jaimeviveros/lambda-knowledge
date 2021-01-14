@@ -18,7 +18,7 @@ sls deploy -f hello -s dev
 
 # server offline install
 -- primero <npm init -y> para iniciar proyecto npm
-npm install --save serverless-offline
+npm install --save-dev serverless-offline
 
 #agregar al yml:
 plugins:
@@ -78,7 +78,7 @@ npm install --save express serverless-http
 npm install --save aws-sdk body-parser
 
 # instalar dynamoDB local
-npm install --save-dev serverless-offline serverless-dynamo-local
+npm install --save serverless-dynamodb-local
 
 # intalar dynamodb offline
 sls dynamodb install
@@ -90,3 +90,5 @@ sls offline start
  dynamodb:
     start:
       migrate: true
+
+# eliminar tabla qla
