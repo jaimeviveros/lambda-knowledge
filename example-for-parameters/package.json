@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "serverless-dynamodb-local": "^0.2.39",
     "serverless-http": "^2.6.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "uuid-validate": "0.0.3"
   }
 }

@@ -41,7 +41,13 @@ functions:
       - httpApi:
           path: /users/create
           method: post
-  get:
+  update:
+    handler: functions/update.handler
+    events:
+      - httpApi:
+          path: /users/update
+          method: put
+  get-all:
     handler: functions/get-all.handler
     events:
       - httpApi:

@@ -9,7 +9,7 @@ module.exports.handler = async (event, context, callback) => {
     const params = {
         TableName: USERS_TABLE,
         Key: {
-            userId: event.pathParameters.id
+            id: event.pathParameters.id
         }
     };
     //
@@ -20,6 +20,7 @@ module.exports.handler = async (event, context, callback) => {
         if (search !== undefined && search.Item !== null) {
             const item = search.Item;
             user.name = item.name;
+            user.lastname = item.lastname;
         }
         else {
             console.log("No se encontro ningun registro.");
