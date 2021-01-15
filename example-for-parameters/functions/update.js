@@ -2,15 +2,13 @@
 
 var validate = require('uuid-validate');
 
-const {
-    USERS_TABLE,
-    DYNAMODB_CONF
-} = require('../conf/connections');
+const UserSchema = require('../schemas/User');
 
 module.exports.handler = async (event, context, callback) => {
+    const model = UserSchema.model();
     // obtenemos datos enviados
     const body = JSON.parse(event.body);
-    const { id, name, lastname } = body;
+    const { id } = body;
     //
     let success = true;
     // si el id no es valido no intentamos actualizar
@@ -19,24 +17,16 @@ module.exports.handler = async (event, context, callback) => {
         success = false;
     }
     else {
-        // configuramos la actualizacion
-        const params = {
-            TableName: USERS_TABLE,
-            Key: {
-                "id": id
-            },
-            UpdateExpression: "set #exp_name = :1, lastname = :2",
-            ExpressionAttributeNames: {
-                "#exp_name": "name"
-            },
-            ExpressionAttributeValues: {
-                ":1": name,
-                ":2": lastname
-            }
+        const filter = {
+            id
+        };
+        //
+        const dataToUpdate = {
+            name, lastname
         };
         // generamos la actualizacion; en caso de error capturamos en catch
         try {
-            await DYNAMODB_CONF.update(params).promise();
+            await model.update(filter, dataToUpdate);
         }
         catch (error) {
             console.log("Error al actualizar el registro.");
@@ -53,4 +43,19 @@ module.exports.handler = async (event, context, callback) => {
         statusCode: 200,
         body: response
     });
+};
+
+const configData = (body) => {
+    const dataToUpdate = {};
+    //
+    const { name, lastname, email } = body;
+    //
+    if (name !== null)
+        dataToUpdate.name = name;
+    //
+    if (lastname !== null)
+        dataToUpdate.lastname = lastname;
+    //
+    if (email !== null)
+        dataToUpdate.email = email;
 };

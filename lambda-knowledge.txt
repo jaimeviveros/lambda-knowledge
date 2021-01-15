@@ -92,3 +92,7 @@ sls offline start
       migrate: true
 
 # eliminar tabla qla
+node conf/delete-table.js
+
+# listar tablas
+aws dynamodb list-tables --endpoint-url http://localhost:8000

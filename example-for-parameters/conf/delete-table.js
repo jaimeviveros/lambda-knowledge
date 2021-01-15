@@ -7,7 +7,7 @@ AWS.config.update({
 });
 
 var dynamodb = new AWS.DynamoDB();  //low-level client
-var tableName = "users-table-dev";
+var tableName = "new-users-table-dev";
 var params = { 
     TableName : tableName
 };

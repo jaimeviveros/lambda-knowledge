@@ -1,19 +1,14 @@
 'use strict';
 
-const {
-    USERS_TABLE,
-    DYNAMODB_CONF
-} = require('../conf/connections');
+const User = require('../schemas/User');
 
 module.exports.handler = async (event, context, callback) => {
-    const params = {
-        TableName: USERS_TABLE,
-    };
+    const model = User.model()
     //
-    let items = [];
+    let items = undefined;
     let success = true;
     try {
-        items = await DYNAMODB_CONF.scan(params).promise();
+        items = await model.scan().exec();
     }
     catch (error) {
         console.log("Error al leer los datos de usuario.");
@@ -22,7 +17,7 @@ module.exports.handler = async (event, context, callback) => {
     }
     //
     const response = JSON.stringify({
-        items: items.Items,
+        items,
         success
     });
     //
