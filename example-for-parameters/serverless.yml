@@ -9,6 +9,8 @@ custom:
       - dev
     start:
       migrate: true
+  serverless-offline:
+    httpPort: 15001
 
 plugins:
   - serverless-dynamodb-local

@@ -6,6 +6,7 @@ const UserSchema = require('../schemas/User');
 
 module.exports.handler = async (event, context, callback) => {
     const model = UserSchema.model();
+    const condition = UserSchema.condition();
     // obtenemos datos enviados
     const body = JSON.parse(event.body);
     const { id } = body;
@@ -17,16 +18,19 @@ module.exports.handler = async (event, context, callback) => {
         success = false;
     }
     else {
-        const filter = {
-            id
-        };
-        //
-        const dataToUpdate = {
-            name, lastname
-        };
         // generamos la actualizacion; en caso de error capturamos en catch
         try {
-            await model.update(filter, dataToUpdate);
+            const filter = {
+                id
+            };
+            //
+            const { dataToUpdate } = await configDataToUpdate(body);
+            // solo actualizaremos un registro con ID existente
+            const conditionOnlyIfExist = { 
+                "condition": condition.filter("id").exists()
+            };
+            //
+            await model.update(filter, dataToUpdate, conditionOnlyIfExist);
         }
         catch (error) {
             console.log("Error al actualizar el registro.");
@@ -45,17 +49,35 @@ module.exports.handler = async (event, context, callback) => {
     });
 };
 
-const configData = (body) => {
+const configDataToUpdate = (body) => {
     const dataToUpdate = {};
     //
     const { name, lastname, email } = body;
     //
-    if (name !== null)
+    if (isNotEmpty(name))
         dataToUpdate.name = name;
     //
-    if (lastname !== null)
+    if (isNotEmpty(lastname))
         dataToUpdate.lastname = lastname;
     //
-    if (email !== null)
+    if (isNotEmpty(email))
         dataToUpdate.email = email;
+    //
+    if (Object.keys(dataToUpdate).length < 1) {
+        return Promise.reject({
+            message: 'Nada para actualizar'
+        });
+    }
+    else {
+        return Promise.resolve({
+            dataToUpdate
+        });
+    }
+};
+
+const isNotEmpty = (string) => {
+    const isNotValid = string === undefined
+        || string === null;
+    //
+    return !isNotValid;
 };

@@ -25,8 +25,10 @@ const options = {
 //
 const schema = new dynamoose.Schema(fields, options);
 //
+const condition = () => new dynamoose.Condition();
 const model = () => dynamoose.model(NEW_USERS_TABLE, schema);
 //
 module.exports = {
+    condition,
     model
 }
