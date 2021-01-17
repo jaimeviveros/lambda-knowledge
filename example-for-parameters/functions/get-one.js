@@ -33,11 +33,16 @@ module.exports.handler = async (event, context, callback) => {
     //
     const response = JSON.stringify({
         user: userFound,
-        success
+        success, 
+        in: true
     });
     //
     callback(null, {
         statusCode: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        },
         body: response
     })
 };

@@ -2,6 +2,10 @@ service: curso-algo
 
 frameworkVersion: "2"
 
+package:
+    exclude:
+        - node_modules/**
+
 custom:
   tableName: "users-table-${self:provider.stage}"
   dynamodb:
@@ -15,6 +19,7 @@ custom:
 plugins:
   - serverless-dynamodb-local
   - serverless-offline
+  - serverless-plugin-include-dependencies
 
 provider:
   name: aws
@@ -25,6 +30,8 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - dynamodb:CreateTable
+        - dynamodb:DescribeTable
         - dynamodb:Query
         - dynamodb:Scan
         - dynamodb:GetItem

@@ -2,7 +2,7 @@
 const dynamoose = require('dynamoose');
 
 const IS_OFFLINE = process.env.IS_OFFLINE;
-const NEW_USERS_TABLE = process.env.NEW_USERS_TABLE;
+const USERS_TABLE = process.env.USERS_TABLE;
 //
 if (IS_OFFLINE === 'true') {
     dynamoose.aws.ddb.local('http://localhost:8000');
@@ -26,7 +26,7 @@ const options = {
 const schema = new dynamoose.Schema(fields, options);
 //
 const condition = () => new dynamoose.Condition();
-const model = () => dynamoose.model(NEW_USERS_TABLE, schema);
+const model = () => dynamoose.model(USERS_TABLE, schema, { "create": false });
 //
 module.exports = {
     condition,
