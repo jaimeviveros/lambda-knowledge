@@ -16,6 +16,9 @@ sls deploy
 # Deploy de la funcion
 sls deploy -f hello -s dev
 
+# deploy del ejemplo - create
+sls deploy -f create -s dev
+
 # server offline install
 -- primero <npm init -y> para iniciar proyecto npm
 npm install --save-dev serverless-offline
@@ -46,7 +49,7 @@ sls remove
 npm install zxcvbn --save
 
 # crear proyecto lambda
-sls create -t aws-nodejs -n curso-algo 
+sls create -t aws-nodejs -n new-example 
 
 # despues de crear, iniciar npm project
 npm init -y
